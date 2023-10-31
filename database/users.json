@@ -42,5 +42,20 @@
   },
   {
     "createdAt": "2023-10-31T05:05:16.921Z"
+  },
+  {
+    "socketId": "AERELkHPi91EKhWUAAAJ",
+    "userId": "1234",
+    "createdAt": "2023-10-31T08:38:58.972Z"
+  },
+  {
+    "socketId": "AERELkHPi91EKhWUAAAJ",
+    "userId": "156666",
+    "createdAt": "2023-10-31T09:00:08.675Z"
+  },
+  {
+    "socketId": "66vGzmP5F-rkBjiPAAAD",
+    "userId": "123",
+    "createdAt": "2023-10-31T09:02:41.091Z"
   }
 ]

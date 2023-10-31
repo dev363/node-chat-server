@@ -25,6 +25,7 @@ const {
   SOCKET_USER_CONNECTED_SUCCESS,
   SOCKET_USER_REMOVE,
   SOCKET_USER_REMOVE_SUCCESS,
+  SOCKET_MESSAGE_RECEIVE_ERROR,
 } = require("./controllers/Constents.js");
 
 const app = express();
@@ -55,7 +56,8 @@ io.on("connection", (socket) => {
 
   // Call on User Connected
   socket.on(SOCKET_USER_CONNECTED, (data) => {
-    const user = __USER__.add(data); // New user connected
+    const user = __USER__.add(data, socket); // New user connected
+    console.log(user, "i m ");
     socket.emit(SOCKET_USER_CONNECTED_SUCCESS, user);
   });
 
@@ -72,7 +74,13 @@ io.on("connection", (socket) => {
   //  User Message sent
   socket.on(SOCKET_MESSAGE_SENT, (msg) => {
     const message = __MESSAGE__.add(msg, socket.id);
-    io.to(message.to).emit(SOCKET_MESSAGE_RECEIVE, message);
+    console.log(message, 88833);
+    if (message.toSocketId) {
+      console.log("009900");
+      io.to(message.toSocketId).emit(SOCKET_MESSAGE_RECEIVE, message);
+    } else {
+      socket.emit(SOCKET_MESSAGE_RECEIVE_ERROR, message);
+    }
   });
 });
 

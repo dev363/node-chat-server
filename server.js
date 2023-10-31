@@ -7,6 +7,7 @@ const express = require("express");
 const { Server } = require("socket.io");
 // const __Controller__ = require("./controllers/Controller.js");
 const __USER__ = require("./controllers/UsersController.js");
+const __MESSAGE__ = require("./controllers/MessageController.js");
 const {
   SOCKET_USER_CONNECTED,
   SOCKET_USER_DISCONNECTED,
@@ -44,6 +45,14 @@ const io = new Server(server);
 io.on("connection", (socket) => {
   socket.emit(SOCKET_CONNECTED, { id: socket.id });
 
+  socket.on("disconnect", () => {
+    socket.emit(SOCKET_USER_DISCONNECTED, { id: socket.id });
+  });
+
+  // ##########################################################
+  // ################### USER ACTIONS #########################
+  // ##########################################################
+
   // Call on User Connected
   socket.on(SOCKET_USER_CONNECTED, (data) => {
     const user = __USER__.add(data); // New user connected
@@ -56,29 +65,15 @@ io.on("connection", (socket) => {
     socket.emit(SOCKET_USER_REMOVE_SUCCESS, user);
   });
 
-  socket.on("disconnect", () => {
-    socket.emit(SOCKET_USER_DISCONNECTED, { id: socket.id });
+  // ##########################################################
+  // ################### MESSAGE ACTIONS #########################
+  // ##########################################################
+
+  //  User Message sent
+  socket.on(SOCKET_MESSAGE_SENT, (msg) => {
+    const message = __MESSAGE__.add(msg, socket.id);
+    io.to(message.to).emit(SOCKET_MESSAGE_RECEIVE, message);
   });
-
-  // //####### User Message sent #######
-  // socket.on(SOCKET_MESSAGE_SENT, (msg) => {
-  //   // console.log("Received msg object:", msg);
-  //   let data = JSON.parse(msg);
-  //   const { to, message } = data;
-
-  //   __Controller__.addMessage({
-  //     ...data,
-  //     from: to,
-  //     createdAt: new Date(),
-  //     to: socket.id,
-  //   });
-  //   io.to(to).emit(SOCKET_MESSAGE_RECEIVE, {
-  //     from: socket.id,
-  //     to,
-  //     createAt: new Date(),
-  //     message,
-  //   });
-  // });
 
   // //####### User Get Messages #######
   // socket.on(SOCKET_MESSAGE_GET_ALL, (msg) => {

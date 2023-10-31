@@ -8,6 +8,7 @@ module.exports = {
   SOCKET_USER_DISCONNECTED: "user:disconnected",
   SOCKET_MESSAGE_SENT: "message:sent",
   SOCKET_MESSAGE_RECEIVE: "message:receive",
+  SOCKET_MESSAGE_RECEIVE_ERROR: "message:receive:error",
   SOCKET_MESSAGE_GET_ALL: "message:getAll",
   SOCKET_GROUP_GET_ALL_ROOMS: "group:getAllRooms",
   SOCKET_GROUP_SENT_ALL_ROOMS: "group:getRooms",
@@ -18,4 +19,9 @@ module.exports = {
   SOCKET_GROUP_CREATE_DONE: "group:create:done",
   SOCKET_GROUP_JOIN: "group:join",
   SOCKET_GROUP_JOIN_DONE: "group:join:done",
+  __TABLES__: {
+    user: "users.json",
+    messages: "messages.json",
+    rooms: "rooms.json",
+  },
 };

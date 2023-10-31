@@ -1,11 +1,7 @@
 const shortId = require("shortid");
 const DataBase = require("../database/db.js");
 
-const __TABLES__ = {
-  user: "users.json",
-  messages: "messages.json",
-  rooms: "rooms.json",
-};
+const __TABLES__ = require("./Constents.js")["__TABLES__"];
 
 class Controller {
   constructor() {

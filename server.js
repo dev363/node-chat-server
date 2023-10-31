@@ -74,43 +74,6 @@ io.on("connection", (socket) => {
     const message = __MESSAGE__.add(msg, socket.id);
     io.to(message.to).emit(SOCKET_MESSAGE_RECEIVE, message);
   });
-
-  // //####### User Get Messages #######
-  // socket.on(SOCKET_MESSAGE_GET_ALL, (msg) => {
-  //   // console.log(msg, SOCKET_MESSAGE_GET_ALL);
-  //   let data = JSON.parse(msg);
-  //   const { user } = data;
-  //   io.to(socket.id).emit(
-  //     SOCKET_MESSAGE_GET_ALL,
-  //     __Controller__.getAllMessages(socket.id, user)
-  //   );
-  // });
-
-  // //####### Get all Groups #######
-  // socket.on(SOCKET_GROUP_GET_ALL_ROOMS, () => {
-  //   io.to(socket.id).emit(SOCKET_GROUP_SENT_ALL_ROOMS, []);
-  // });
-
-  // //####### Get Group's Users #######
-  // socket.on(SOCKET_GROUP_GET_ALL_USERS, (roomId) => {
-  //   io.to(socket.id).emit(SOCKET_GROUP_SENT_ALL_USERS, []);
-  // });
-
-  // //####### Create Groups #######
-  // socket.on(SOCKET_GROUP_CREATE, (obj) => {
-  //   const data = JSON.parse(obj);
-  //   console.log(SOCKET_GROUP_CREATE, data);
-  //   const room = __Controller__.createGroup(data);
-  //   io.to(socket.id).emit(SOCKET_GROUP_CREATE_DONE, room);
-  // });
-
-  // //####### Create Groups #######
-  // socket.on(SOCKET_GROUP_JOIN, (data) => {
-  //   const { name, user } = JSON.parse(data);
-  //   console.log(SOCKET_GROUP_JOIN, data);
-
-  //   // io.to(socket.id).emit(SOCKET_GROUP_SENT_ALL_ROOMS, []);
-  // });
 });
 
 server.listen(process.env.PORT, () => {

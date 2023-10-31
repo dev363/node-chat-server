@@ -13,9 +13,16 @@ async function saveData(filename, data) {
   }
 }
 
-async function readData(filename) {
-  const data = await fs.readFileSync(join(databaseDirectory, filename));
-  return JSON.parse(data);
+function readData(filename) {
+  try {
+    const data = fs.readFileSync(join(databaseDirectory, filename), "utf8");
+    if (data) {
+      return JSON.parse(data);
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
 }
 
 module.exports = {

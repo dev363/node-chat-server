@@ -50,11 +50,41 @@ class UserController extends DbController {
   /**
    * This function does something with a socket and user ID.
    *
-   * @param {string} userId - The ID of the user.
+   * @param {string} socketId - The ID of the user socket.
    *
    * @returns {Object} with status, message properties.
    */
 
+  removeBySocketId(socketId) {
+    if (!socketId) {
+      return {
+        status: false,
+        message: "socketId required for delete.",
+      };
+    }
+    const index = this.findUserBySocketId(socketId);
+    if (index !== -1) {
+      this.USERS.splice(index, 1);
+      this.saveUser();
+      return {
+        status: true,
+        message: "User removed success",
+      };
+    } else {
+      return {
+        status: false,
+        message: "Invalid userId",
+      };
+    }
+  }
+
+  /**
+   * This function does something with a socket and user ID.
+   *
+   * @param {string} userId - The ID of the user.
+   *
+   * @returns {Object} with status, message properties.
+   */
   remove(userId) {
     if (!userId) {
       return {
@@ -97,6 +127,10 @@ class UserController extends DbController {
    */
   findUserByUserId(userId) {
     const userIndex = this.USERS.findIndex((u) => u.userId === userId);
+    return userIndex;
+  }
+  findUserBySocketId(socketId) {
+    const userIndex = this.USERS.findIndex((u) => u.socketId === socketId);
     return userIndex;
   }
 }

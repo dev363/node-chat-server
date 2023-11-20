@@ -41,13 +41,21 @@ app.get("/api-status", (req, res) => {
 
 // Socket Integration Here
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["authToken"],
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   socket.emit(SOCKET_CONNECTED, { id: socket.id });
 
   socket.on("disconnect", () => {
     socket.emit(SOCKET_USER_DISCONNECTED, { id: socket.id });
+    const user = __USER__.removeBySocketId(socket.id); // New user connected
   });
 
   // ##########################################################
